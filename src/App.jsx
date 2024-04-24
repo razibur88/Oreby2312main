@@ -1,5 +1,7 @@
 import Menu from "./components/Menu"
 import Navbar from "./components/Navbar"
+import Banner from "./components/Banner"
+import Sale from "./components/Sale"
 
 function App() {
 
@@ -7,6 +9,9 @@ function App() {
     <>
       <Navbar/>
       <Menu/>
+      <Banner/>
+      <Sale/>
+
     </>
   )
 }
