@@ -2,6 +2,7 @@ import Menu from "./components/Menu"
 import Navbar from "./components/Navbar"
 import Banner from "./components/Banner"
 import Sale from "./components/Sale"
+import NewArrivals from "./components/NewArrivals"
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
       <Menu/>
       <Banner/>
       <Sale/>
+      <NewArrivals/>
 
     </>
   )
