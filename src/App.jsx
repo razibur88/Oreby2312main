@@ -1,19 +1,21 @@
-import Menu from "./components/Menu"
-import Navbar from "./components/Navbar"
-import Banner from "./components/Banner"
-import Sale from "./components/Sale"
-import NewArrivals from "./components/NewArrivals"
+import RootLayout from "./components/layout/RootLayout"
+import Home from "./pages/Home"
+import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom"
+import Product from "./pages/Product"
+
+let router = createBrowserRouter(createRoutesFromElements(
+  <Route element={<RootLayout/>}>
+    <Route index element={<Home/>}></Route>
+    <Route path="/product" element={<Product/>}></Route>
+  </Route>
+))
+
 
 function App() {
 
   return (
     <>
-      <Navbar/>
-      <Menu/>
-      <Banner/>
-      <Sale/>
-      <NewArrivals/>
-
+      <RouterProvider router={router}></RouterProvider>
     </>
   )
 }

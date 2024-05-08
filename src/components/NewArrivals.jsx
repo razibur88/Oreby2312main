@@ -34,7 +34,18 @@ const NewArrivals = () => {
         slidesToShow: 4,
         slidesToScroll: 1,
         nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />
+        prevArrow: <SamplePrevArrow />,
+        responsive: [
+            {
+              breakpoint: 624,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+              }
+            },
+            
+           
+          ]
       };
 
     let [products, setProducts]= useState([])

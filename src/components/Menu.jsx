@@ -50,7 +50,7 @@ const Menu = () => {
                     {cateshow &&
                         <div className="absolute z-50 top-[35px] left-0 bg-[#262626] w-[300px]">
                             <ul className='py-3'>
-                                <li className='py-2 pl-3 text-[#fff] opacity-70 hover:opacity-100 hover:pl-8 duration-700 ease-in-out'>Accesories</li>
+                                <li className='py-2 pl-3 text-[#fff] opacity-70 hover:opacity-100 hover:pl-8 duration-700 ease-in-out'></li>
                                 <li className='py-2 pl-3 text-[#fff] opacity-70 hover:opacity-100 hover:pl-8 duration-700 ease-in-out'>Furniture</li>
                                 <li className='py-2 pl-3 text-[#fff] opacity-70 hover:opacity-100 hover:pl-8 duration-700 ease-in-out'>Electronics</li>
                                 <li className='py-2 pl-3 text-[#fff] opacity-70 hover:opacity-100 hover:pl-8 duration-700 ease-in-out'>Clothes</li>
