@@ -26,7 +26,22 @@ const Product = () => {
    }
 
 
-console.log(pageNumber);
+let paginate = (pageNumber) =>{
+    setPageStart(pageNumber + 1)
+}
+
+let next = ()=>{
+    if(pageStart < pageNumber.length){
+        setPageStart((state) => state + 1)
+    }
+}
+
+let prve = () =>{
+    if(pageStart > 1){
+
+        setPageStart((state)=> state - 1)
+    }
+}
    
 
 
@@ -57,7 +72,7 @@ console.log(pageNumber);
                      
                      <Post allPage={allPage}/>
                      <div className="text-end">
-                       <PaginationArea pageNumber={pageNumber}/>
+                       <PaginationArea pageNumber={pageNumber} paginate={paginate} pageStart={pageStart} next={next} prve={prve}/>
                      </div>
                       
                    

@@ -27,7 +27,6 @@ const Post = ({ allPage }) => {
                                     <FaShoppingCart />
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
