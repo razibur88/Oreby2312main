@@ -55,25 +55,12 @@ const ProductDetails = () => {
             <p className='text-[#FFD881] flex pt-3'> {clicentRating}</p>
                
         </div>
-        {/* <div className="flex items-center py-6 border-b-[1px] border-[#222]">
-            <h4 className='pr-5'>QUANTITY:</h4>
-            <div className="border-2 border-[#222] w-40 h-[50px] flex justify-around items-center">
-                <div className="">
-                    <span>-</span>
-                </div>
-                <div className="">
-                    <span>0</span>
-                </div>
-                <div className="">
-                    <span>+</span>
-                </div>
-            </div>
-        </div> */}
+        
 
       <div className=" w-[50%] py-[24px] border-b-[1px] border-[#F0F0F0]">
         <div className="flex">
             <h4 className='text-[16px] font-dm font-semibold pr-[27px]'>STATUS:</h4>
-            <h4 className='text-[16px] font-dm font-normal text-[#767676]'>In Stock</h4>
+            <h4 className='text-[16px] font-dm font-normal text-[#767676]'>{singleProduct.stock}</h4>
             
         </div>
       </div>
