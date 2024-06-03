@@ -6,8 +6,10 @@ import { FaUser, FaCartArrowDown, FaSearch } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useRef } from 'react';
 import { RxCross2 } from "react-icons/rx";
+import { useSelector } from 'react-redux';
 
 const Menu = () => {
+    let data = useSelector((state)=>state.product.cartItem)
     let [cateshow, setCateshow] = useState(false)
     let [cateshowcart, setCateshowCart] = useState(false)
     let [cateshowuser, setCateshowUser] = useState(false)
@@ -15,6 +17,7 @@ const Menu = () => {
     let cateMenu = useRef()
     let catecart = useRef()
     let cateuser = useRef()
+
 
     useEffect(() => {
         document.addEventListener("click", (e) => {
@@ -37,6 +40,7 @@ const Menu = () => {
     }, [cateshow, cateshowcart,cateshowuser])
 
 
+    
    
 
     return (
@@ -75,7 +79,8 @@ const Menu = () => {
                             <IoMdArrowDropdown />
                         </div>
 
-                        <div ref={catecart}>
+                        <div className='relative' ref={catecart}>
+                            {data.length ? <div className="bg-[#F5F5F3] h-[20px] w-[20px] absolute top-[-12px] left-[12px] text-center leading-[20px]">{data.length}</div> : ""}
                             <FaCartArrowDown />
                         </div>
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Container from '../components/Container'
 import Flex from '../components/Flex'
 import { Link } from 'react-router-dom'
@@ -7,11 +7,16 @@ import { TfiMenuAlt } from "react-icons/tfi";
 import { ApiData } from '../components/ContextApi';
 import Post from '../components/pagination/Post';
 import PaginationArea from '../components/pagination/PaginationArea';
+import { FaPlus } from "react-icons/fa";
+import { TiMinus } from "react-icons/ti";
+
+
 
 const Product = () => {
     let data = useContext(ApiData)
-
+    let [showCate, setShowCate] = useState(false)
     let [pageStart, setPageStart] = useState(1)
+    let [category, setCategory] = useState([])
     let [perPage, setPerPage] = useState(6)
 
    let lastPage  = pageStart * perPage
@@ -38,10 +43,17 @@ let next = ()=>{
 
 let prve = () =>{
     if(pageStart > 1){
-
         setPageStart((state)=> state - 1)
     }
 }
+
+useEffect(()=>{
+    setCategory([...new Set(data.map((item)=> item.category))])
+},[data])
+console.log(category);
+
+
+
    
 
 
@@ -58,7 +70,19 @@ let prve = () =>{
             </div>
             <Flex>
                 <div className="w-[20%]">
-                    <h2>category</h2>
+                    <div className="pr-10 pt-10">
+                        <div onClick={()=>setShowCate(!showCate)} className="flex items-center justify-between">
+                            <h2 className='text-[18px] text-[#292929] font-dm font-bold '>Shop by Category</h2>
+                            {showCate == true ?  <TiMinus/> :  <FaPlus/>}
+                        </div>
+                        {showCate &&
+                        <ul>
+                            {category.map((item)=>(
+                            <li>{item}</li>
+                            ))}
+                        </ul>
+                        }
+                    </div>
                 </div>
                 <div className="w-[80%]">
                     <div className="flex items-center ">
