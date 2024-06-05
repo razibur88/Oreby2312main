@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Container from '../components/Container'
-import Flex from '../components/Flex'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react';
+import { FaPlus } from "react-icons/fa";
 import { IoGrid } from "react-icons/io5";
 import { TfiMenuAlt } from "react-icons/tfi";
-import { ApiData } from '../components/ContextApi';
-import Post from '../components/pagination/Post';
-import PaginationArea from '../components/pagination/PaginationArea';
-import { FaPlus } from "react-icons/fa";
 import { TiMinus } from "react-icons/ti";
+import { Link } from 'react-router-dom';
+import Container from '../components/Container';
+import { ApiData } from '../components/ContextApi';
+import Flex from '../components/Flex';
+import PaginationArea from '../components/pagination/PaginationArea';
+import Post from '../components/pagination/Post';
 
 
 
@@ -18,6 +18,7 @@ const Product = () => {
     let [pageStart, setPageStart] = useState(1)
     let [category, setCategory] = useState([])
     let [perPage, setPerPage] = useState(6)
+    let [categoryFilter, setCategoryFilter] = useState([])
 
    let lastPage  = pageStart * perPage
    let firstPage =  lastPage - perPage
@@ -26,7 +27,7 @@ const Product = () => {
 
    let pageNumber = []
 
-   for(let i = 0; i < Math.ceil(data.length / perPage); i++){
+   for(let i = 0; i < Math.ceil(categoryFilter.length> 0 ? categoryFilter : data.length / perPage); i++){
     pageNumber.push(i)
    }
 
@@ -50,7 +51,12 @@ let prve = () =>{
 useEffect(()=>{
     setCategory([...new Set(data.map((item)=> item.category))])
 },[data])
-console.log(category);
+
+
+let handleCategory = (citem) =>{
+    let cateFilter = data.filter((item)=>item.category == citem)
+    setCategoryFilter(cateFilter)
+}
 
 
 
@@ -78,7 +84,7 @@ console.log(category);
                         {showCate &&
                         <ul>
                             {category.map((item)=>(
-                            <li>{item}</li>
+                            <li onClick={()=>handleCategory(item)}>{item}</li>
                             ))}
                         </ul>
                         }
@@ -94,7 +100,7 @@ console.log(category);
                         </div>
                     </div>
                      
-                     <Post allPage={allPage}/>
+                     <Post allPage={allPage} categoryFilter={categoryFilter}/>
                      <div className="text-end">
                        <PaginationArea pageNumber={pageNumber} paginate={paginate} pageStart={pageStart} next={next} prve={prve}/>
                      </div>
