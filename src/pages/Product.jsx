@@ -19,6 +19,7 @@ const Product = () => {
     let [category, setCategory] = useState([])
     let [perPage, setPerPage] = useState(6)
     let [categoryFilter, setCategoryFilter] = useState([])
+    let [multi, setMulti] = useState("")
 
    let lastPage  = pageStart * perPage
    let firstPage =  lastPage - perPage
@@ -58,7 +59,9 @@ let handleCategory = (citem) =>{
     setCategoryFilter(cateFilter)
 }
 
-
+let handleList = () =>{
+    setMulti("activeMulti")
+}
 
    
 
@@ -92,15 +95,15 @@ let handleCategory = (citem) =>{
                 </div>
                 <div className="w-[80%]">
                     <div className="flex items-center ">
-                        <div className="mr-[20px] py-[12px] px-[12px] border-2 duration-500 ease-in-out hover:bg-[#262626] hover:text-[#fff]">
+                        <div onClick={()=>setMulti("")} className="mr-[20px] py-[12px] px-[12px] border-2 duration-500 ease-in-out hover:bg-[#262626] hover:text-[#fff]">
                             <IoGrid />
                         </div>
-                        <div className="py-[12px] px-[12px] border-2 duration-500 ease-in-out hover:bg-[#262626] hover:text-[#fff]">
+                        <div onClick={handleList} className="py-[12px] px-[12px] border-2 duration-500 ease-in-out hover:bg-[#262626] hover:text-[#fff]">
                             <TfiMenuAlt />
                         </div>
                     </div>
                      
-                     <Post allPage={allPage} categoryFilter={categoryFilter}/>
+                     <Post allPage={allPage} categoryFilter={categoryFilter} multi={multi}/>
                      <div className="text-end">
                        <PaginationArea pageNumber={pageNumber} paginate={paginate} pageStart={pageStart} next={next} prve={prve}/>
                      </div>
