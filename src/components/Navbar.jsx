@@ -24,8 +24,8 @@ const Navbar = () => {
                             
                         </li>
                         <li className='font-dm text-[#262626] font-bold text-[16px] lg:px-5 py-2 lg:py-0'><Link to="/product">Shop</Link></li>
-                        <li className='font-dm text-[#262626] font-bold text-[16px] lg:px-5 py-2 lg:py-0'>About</li>
-                        <li className='font-dm text-[#262626] font-bold text-[16px] lg:px-5 py-2 lg:py-0'>Contacts</li>
+                        <li className='font-dm text-[#262626] font-bold text-[16px] lg:px-5 py-2 lg:py-0'> <Link to="/about">About</Link> </li>
+                        <li className='font-dm text-[#262626] font-bold text-[16px] lg:px-5 py-2 lg:py-0'><Link to="/contact">Contacts</Link></li>
                         <li className='font-dm text-[#262626] font-bold text-[16px] lg:px-5 py-2 lg:py-0'>Journal</li>
                     </ul>
                 </div>

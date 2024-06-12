@@ -24,6 +24,11 @@ const Post = ({ allPage,categoryFilter,multi }) => {
                 navigate("/product")
             })
         }
+        let handleShowLess = ()=>{
+            setCount(true)
+            let filterVag = categoryFilter.slice(0,5)
+            setFilterShow(filterVag)
+        }
 
     
     return (
@@ -73,7 +78,8 @@ const Post = ({ allPage,categoryFilter,multi }) => {
                         <h2 onClick={handleFilShow}>Show all</h2>
                     </div> 
                     :
-                    <h2>hide</h2>
+                    categoryFilter.length > 5 &&
+                    <h2 onClick={()=>handleShowLess()}>hide</h2>
                     }
                 </div>
             :
