@@ -65,7 +65,6 @@ const Menu = () => {
         // setSearchFilter("")
     }
     let nnsnsnsn = (e) =>{
-
         if(e.code == "Enter"){
           console.log("ok");  
         }
