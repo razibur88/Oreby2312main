@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import Container from './Container'
-import Flex from './Flex'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { FaCartArrowDown, FaSearch, FaUser } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";
-import { FaUser, FaCartArrowDown, FaSearch } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { useRef } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Container from './Container';
+import { ApiData } from './ContextApi';
+import Flex from './Flex';
 
 const Menu = () => {
+    let navigate = useNavigate()
     let data = useSelector((state)=>state.product.cartItem)
+    let info = useContext(ApiData)
     let [cateshow, setCateshow] = useState(false)
     let [cateshowcart, setCateshowCart] = useState(false)
     let [cateshowuser, setCateshowUser] = useState(false)
+    let [searchChange, setSearchChange] = useState('')
+    let [searchFilter, setSearchFilter] = useState([])
 
     let cateMenu = useRef()
     let catecart = useRef()
     let cateuser = useRef()
+
 
 
     useEffect(() => {
@@ -38,6 +44,34 @@ const Menu = () => {
             }
         })
     }, [cateshow, cateshowcart,cateshowuser])
+
+    let handleSearch = (e) =>{
+        setSearchChange(e.target.value);
+        if(e.target.value == ""){
+            setSearchFilter([])
+        }else{
+            let searchFind = info.filter((item)=> item.title.toLowerCase().includes(e.target.value))
+            setSearchFilter(searchFind);
+        }
+        
+    }
+
+    
+
+    let handleSingleP = (id)=>{
+        console.log(id);
+        // navigate(`/product/${id}`)
+        // setSearchChange("")
+        // setSearchFilter("")
+    }
+    let nnsnsnsn = (e) =>{
+
+        if(e.code == "Enter"){
+          console.log("ok");  
+        }
+    }
+
+
 
 
     
@@ -66,10 +100,30 @@ const Menu = () => {
                 </div>
                 <div className="w-2/5">
                     <div className="relative">
-                        <input placeholder='Search....' className='border-2 border-[#222] w-full h-12 pl-2' type="text" />
+                        <input onKeyUp={nnsnsnsn} onChange={handleSearch} placeholder='Search....' className='border-2 border-[#222] w-full h-12 pl-2' type="text" />
                         <div className="absolute top-[50%] translate-y-[-50%] right-[15px]">
+                            <div className="">
                             <FaSearch />
+                            </div>
                         </div>
+                        {searchFilter.length > 0 &&
+                        <div className="absolute z-[50] top-[50px] left-0 h-[500px] overflow-y-scroll">
+                            {searchFilter.map((item, index)=>(
+                                <div onClick={()=>handleSingleP(index + 1)} className="flex bg-[#F5F5F3] py-[20px] px-[20px]">
+                                    <div className="flex items-center justify-between w-[350px]">
+                                        <div className="h-[100px] w-[100px]">
+                                            <img src={item.thumbnail} alt="" />
+                                        </div>
+                                        <div className="">
+                                            <h4 className='text-[14px ] text-[#262626] font-dm font-bold'>{item.title}</h4>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            ))}
+                            
+                        </div>
+                        }
                     </div>
                 </div>
                 <div className="w-[30%] relative">
