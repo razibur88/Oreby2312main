@@ -20,9 +20,6 @@ const Post = ({ allPage,categoryFilter,multi }) => {
 
         let handlePcart = (item)=>{
             dispatch(addToCart({...item, qun:1}))
-            setTimeout(()=>{
-                navigate("/product")
-            })
         }
         let handleShowLess = ()=>{
             setCount(true)
@@ -61,6 +58,7 @@ const Post = ({ allPage,categoryFilter,multi }) => {
                                 </div>
                             </div>
         
+                    </Link>
                             <div className="flex justify-between items-center  py-5">
                                 <div className="">
                                     <p className='text-[16px] text-[#262626] font-dm font-bold'>{item.title}</p>
@@ -69,7 +67,6 @@ const Post = ({ allPage,categoryFilter,multi }) => {
                                     <h3 className='text-[16px] text-[#262626] font-dm font-bold'>${item.price}</h3>
                                 </div>
                             </div>
-                    </Link>
                         </div>
                 ))}
                     </div>
@@ -86,10 +83,10 @@ const Post = ({ allPage,categoryFilter,multi }) => {
             <div className={`${multi == "activeMulti" ? "" : "flex justify-between flex-wrap"}`}>
                     {allPage.map((item) => (
                     <div className="w-[32%]">
-                        <Link to={`/product/${item.id}`}>
                         <div className="relative group overflow-hidden">
+                        <Link to={`/product/${item.id}`}>
                             <img src={item.thumbnail} className='w-full lg:h-[270px]' alt="" />
-
+                            </Link>
                             <div className=" absolute left-0 bottom-[-150px]  w-full bg-[#fff] h-[150px] duration-500 ease-in-out flex items-center justify-end group-hover:bottom-0" >
                                 <div className="">
                                     <div className="flex items-center justify-end mr-2 py-2">
@@ -116,7 +113,7 @@ const Post = ({ allPage,categoryFilter,multi }) => {
                                 <h3 className='text-[16px] text-[#262626] font-dm font-bold'>${item.price}</h3>
                             </div>
                         </div>
-                </Link>
+              
                     </div>
             ))}
             </div>

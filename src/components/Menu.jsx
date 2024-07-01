@@ -10,71 +10,70 @@ import { ApiData } from './ContextApi';
 import Flex from './Flex';
 
 const Menu = () => {
-    let navigate = useNavigate()
-    let data = useSelector((state)=>state.product.cartItem)
-    let info = useContext(ApiData)
-    let [cateshow, setCateshow] = useState(false)
-    let [cateshowcart, setCateshowCart] = useState(false)
-    let [cateshowuser, setCateshowUser] = useState(false)
-    let [searchChange, setSearchChange] = useState('')
-    let [searchFilter, setSearchFilter] = useState([])
+    let navigate = useNavigate();
+    let data = useSelector((state)=>state.product.cartItem);
+    let info = useContext(ApiData);
+    let [cateshow, setCateshow] = useState(false);
+    let [cateshowcart, setCateshowCart] = useState(false);
+    let [cateshowuser, setCateshowUser] = useState(false);
+    let [searchChange, setSearchChange] = useState('');
+    let [searchFilter, setSearchFilter] = useState([]);
+    let [selectedItemIndex, setSelectedItemIndex] = useState(-1); // Track selected item index
 
-    let cateMenu = useRef()
-    let catecart = useRef()
-    let cateuser = useRef()
-
-
+    let cateMenu = useRef();
+    let catecart = useRef();
+    let cateuser = useRef();
 
     useEffect(() => {
-        document.addEventListener("click", (e) => {
-            if (cateMenu.current.contains(e.target) == true) {
-                setCateshow(!cateshow)
-            } else {
-                setCateshow(false)
-            }
-            if (catecart.current.contains(e.target) == true) {
-                setCateshowCart(!cateshowcart)
-            } else {
-                setCateshowCart(false)
-            }
-            if(cateuser.current.contains(e.target) == true){
-                setCateshowUser(!cateshowuser)
-            }else{
-                setCateshowUser(false)
-            }
-        })
-    }, [cateshow, cateshowcart,cateshowuser])
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
 
-    let handleSearch = (e) =>{
+    const handleClickOutside = (e) => {
+        if (cateMenu.current.contains(e.target)) {
+            setCateshow(!cateshow);
+        } else {
+            setCateshow(false);
+        }
+        if (catecart.current.contains(e.target)) {
+            setCateshowCart(!cateshowcart);
+        } else {
+            setCateshowCart(false);
+        }
+        if (cateuser.current.contains(e.target)) {
+            setCateshowUser(!cateshowuser);
+        } else {
+            setCateshowUser(false);
+        }
+    };
+
+    const handleSearch = (e) =>{
         setSearchChange(e.target.value);
-        if(e.target.value == ""){
-            setSearchFilter([])
-        }else{
-            let searchFind = info.filter((item)=> item.title.toLowerCase().includes(e.target.value))
+        if (e.target.value === "") {
+            setSearchFilter([]);
+        } else {
+            let searchFind = info.filter((item)=> item.title.toLowerCase().includes(e.target.value));
             setSearchFilter(searchFind);
         }
-        
-    }
+    };
 
-    
+    const handleSingleP = (id) => {
+        navigate(`/product/${id}`);
+        setSearchChange("")
+        setSearchFilter([])
+    };
 
-    let handleSingleP = (id)=>{
-        console.log(id);
-        // navigate(`/product/${id}`)
-        // setSearchChange("")
-        // setSearchFilter("")
-    }
-    let nnsnsnsn = (e) =>{
-        if(e.code == "Enter"){
-          console.log("ok");  
+    const handleKeyDown = (e) => {
+        if (e.key === 'ArrowDown') {
+            setSelectedItemIndex(prevIndex => Math.min(prevIndex + 1, searchFilter.length - 1));
+        } else if (e.key === 'ArrowUp') {
+            setSelectedItemIndex(prevIndex => Math.max(prevIndex - 1, -1));
+        } else if (e.key === 'Enter' && selectedItemIndex !== -1) {
+            handleSingleP(searchFilter[selectedItemIndex].id);
         }
-    }
-
-
-
-
-    
-   
+    };
 
     return (
         <Container>
@@ -99,16 +98,24 @@ const Menu = () => {
                 </div>
                 <div className="w-2/5">
                     <div className="relative">
-                        <input onKeyUp={nnsnsnsn} onChange={handleSearch} placeholder='Search....' className='border-2 border-[#222] w-full h-12 pl-2' type="text" />
+                        <input
+                            onChange={handleSearch}
+                            onKeyDown={handleKeyDown} // Listen for arrow keys and enter key
+                            placeholder='Search....'
+                            className='border-2 border-[#222] w-full h-12 pl-2'
+                            type="text"
+                        />
                         <div className="absolute top-[50%] translate-y-[-50%] right-[15px]">
-                            <div className="">
                             <FaSearch />
-                            </div>
                         </div>
                         {searchFilter.length > 0 &&
                         <div className="absolute z-[50] top-[50px] left-0 h-[500px] overflow-y-scroll">
-                            {searchFilter.map((item, index)=>(
-                                <div onClick={()=>handleSingleP(index + 1)} className="flex bg-[#F5F5F3] py-[20px] px-[20px]">
+                            {searchFilter.map((item, index) => (
+                                <div
+                                    key={item.id}
+                                    onClick={() => handleSingleP(item.id)}
+                                    className={`flex bg-[#F5F5F3] py-[20px] px-[20px] ${index === selectedItemIndex ? 'bg-gray-200' : ''}`}
+                                >
                                     <div className="flex items-center justify-between w-[350px]">
                                         <div className="h-[100px] w-[100px]">
                                             <img src={item.thumbnail} alt="" />
@@ -116,11 +123,9 @@ const Menu = () => {
                                         <div className="">
                                             <h4 className='text-[14px ] text-[#262626] font-dm font-bold'>{item.title}</h4>
                                         </div>
-                                    
                                     </div>
                                 </div>
                             ))}
-                            
                         </div>
                         }
                     </div>
@@ -136,7 +141,6 @@ const Menu = () => {
                             {data.length ? <div className="bg-[#F5F5F3] h-[20px] w-[20px] absolute top-[-12px] left-[12px] text-center leading-[20px]">{data.length}</div> : ""}
                             <FaCartArrowDown />
                         </div>
-
                     </div>
                     {cateshowcart &&
                         <div className="absolute z-50 top-[40px] right-0 ">
@@ -177,12 +181,10 @@ const Menu = () => {
                         </div>
                     </div>
                     }
-
                 </div>
             </Flex>
-
         </Container>
-    )
-}
+    );
+};
 
-export default Menu
+export default Menu;

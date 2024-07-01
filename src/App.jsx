@@ -8,9 +8,12 @@ import CheckOut from "./pages/CheckOut"
 import About from "./pages/About"
 import Contact from "./pages/Contact"
 import Login from "./pages/Login"
+import SignUp from "./pages/SignUp"
+import Error404 from "./pages/Error404"
 
 let router = createBrowserRouter(createRoutesFromElements(
-  <Route element={<RootLayout/>}>
+  <>
+    <Route element={<RootLayout/>}>
     <Route index element={<Home/>}></Route>
     <Route path="/product" element={<Product/>}></Route>
     <Route path="/product/:id" element={<ProductDetails/>}></Route>
@@ -19,7 +22,10 @@ let router = createBrowserRouter(createRoutesFromElements(
     <Route path="/about" element={<About/>}></Route>
     <Route path="/contact" element={<Contact/>}></Route>
     <Route path="/login" element={<Login/>}></Route>
+    <Route path="/signup" element={<SignUp/>}></Route>
   </Route>
+    <Route path="/*" element={<Error404/>}></Route>
+  </>
 ))
 
 
