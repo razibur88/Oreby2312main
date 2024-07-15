@@ -3,11 +3,12 @@ import { FaCartArrowDown, FaSearch, FaUser } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "./Container";
 import { ApiData } from "./ContextApi";
 import Flex from "./Flex";
+import { removeProduct } from "./slice/productSlice";
 
 const Menu = () => {
   let navigate = useNavigate();
@@ -23,13 +24,15 @@ const Menu = () => {
   let cateMenu = useRef();
   let catecart = useRef();
   let cateuser = useRef();
+  let cartRef = useRef();
+  let dispatch = useDispatch()
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [cateshow,cateshowcart,cateshowuser]);
 
   const handleClickOutside = (e) => {
     if (cateMenu.current.contains(e.target)) {
@@ -46,6 +49,9 @@ const Menu = () => {
       setCateshowUser(!cateshowuser);
     } else {
       setCateshowUser(false);
+    }
+    if(cartRef.current.contains(e.target)){
+      setCateshowCart(true)
     }
   };
 
@@ -78,6 +84,10 @@ const Menu = () => {
       handleSingleP(searchFilter[selectedItemIndex].id);
     }
   };
+
+  let handleDelete = (id)=>{
+    dispatch(removeProduct(id))
+  }
 
   return (
     <Container>
@@ -157,7 +167,8 @@ const Menu = () => {
               <IoMdArrowDropdown />
             </div>
 
-            <div className="relative" ref={catecart}>
+            <div ref={catecart}>
+            <div className="relative">
               {data.length ? (
                 <div className="bg-[#F5F5F3] h-[20px] w-[20px] absolute top-[-12px] left-[12px] text-center leading-[20px]">
                   {data.length}
@@ -167,11 +178,12 @@ const Menu = () => {
               )}
               <FaCartArrowDown />
             </div>
+            </div>
           </div>
-          {console.log(data.length)}
+          <div ref={cartRef}>
           {cateshowcart && (
             <div className="absolute z-50 top-[40px] right-0 ">
-              {data.map(() => (
+              {data.map((item,id) => (
                 <>
                   <div className="flex bg-[#F5F5F3] py-[20px] px-[20px]">
                     <div className="flex items-center justify-between w-[350px]">
@@ -184,7 +196,7 @@ const Menu = () => {
                           $44.00
                         </p>
                       </div>
-                      <div className="ml-[30px]">
+                      <div onClick={()=>handleDelete(id)} className="ml-[30px]">
                         <RxCross2 />
                       </div>
                     </div>
@@ -224,6 +236,7 @@ const Menu = () => {
               ))}
             </div>
           )}
+          </div>
           {cateshowuser && (
             <div className="absolute z-50 top-10 right-[0px]">
               <div className="text-center">
