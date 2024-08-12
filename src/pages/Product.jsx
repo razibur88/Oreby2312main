@@ -20,6 +20,10 @@ const Product = () => {
     let [perPage, setPerPage] = useState(6)
     let [categoryFilter, setCategoryFilter] = useState([])
     let [multi, setMulti] = useState("")
+    let [priceShow, setPriceShow] = useState(false)
+    let [priceLow, setPriceLow] = useState("")
+    let [priceHigh, setPriceHigh] = useState("")
+    let [priceDispay, setPriceDisplay] = useState([])
 
    let lastPage  = pageStart * perPage
    let firstPage =  lastPage - perPage
@@ -63,6 +67,16 @@ let handleList = () =>{
     setMulti("activeMulti")
 }
 
+let handleShowChange = (e) =>{
+    setPerPage(e.target.value);
+}
+
+let handleOneToTen = (value)=>{
+    setPriceLow(value.low)
+    setPriceHigh(value.high)
+    let priceFilter = data.filter((item)=> item.price > value.low && item.price < value.high)
+    setPriceDisplay(priceFilter);
+}
    
 
 
@@ -92,18 +106,41 @@ let handleList = () =>{
                         </ul>
                         }
                     </div>
+                    <div className="">
+                    <h2 onClick={()=>setPriceShow(!priceShow)} className='text-[18px] text-[#292929] font-dm font-bold '>Show Price</h2>
+                    {priceShow &&
+                    <ul>
+                        <li onClick={()=>handleOneToTen({low:0, high:10})}>$0-$9.99</li>
+                      
+                        <li onClick={()=>handleOneToTen({low:10, high:20})}>$10-$19.99</li>
+
+                    </ul>
+                    }
+                    </div>
                 </div>
                 <div className="w-[80%]">
-                    <div className="flex items-center ">
+                    <div className="flex items-center justify-between ">
+                        <div className="">
+                        <div className="flex">
                         <div onClick={()=>setMulti("")} className="mr-[20px] py-[12px] px-[12px] border-2 duration-500 ease-in-out hover:bg-[#262626] hover:text-[#fff]">
                             <IoGrid />
                         </div>
                         <div onClick={handleList} className="py-[12px] px-[12px] border-2 duration-500 ease-in-out hover:bg-[#262626] hover:text-[#fff]">
                             <TfiMenuAlt />
                         </div>
+                        </div>
+                        </div>
+                        <div className="">
+                            <label htmlFor="" className='pr-2'>Show :</label>
+                            <select onChange={handleShowChange} className='w-[100px] h-[30px] border-2 border-[#262626] text-center'>
+                                <option value="6">6</option>
+                                <option value="12">12</option>
+                                <option value="18">18</option>
+                            </select>
+                        </div>
                     </div>
                      
-                     <Post allPage={allPage} categoryFilter={categoryFilter} multi={multi}/>
+                     <Post priceDispay={priceDispay} allPage={allPage} categoryFilter={categoryFilter} multi={multi}/>
                      <div className="text-end">
                        <PaginationArea pageNumber={pageNumber} paginate={paginate} pageStart={pageStart} next={next} prve={prve}/>
                      </div>
